@@ -1,0 +1,31 @@
+def is_safe(node, color, assignment, neighbors):
+    for n in neighbors[node]:
+        if assignment.get(n) == color:
+            return False
+    return True
+
+def backtrack(assignment, colors, neighbors):
+    if len(assignment) == len(neighbors):
+        return assignment
+    unassigned = [v for v in neighbors if v not in assignment][0]
+    for color in colors:
+        if is_safe(unassigned, color, assignment, neighbors):
+            assignment[unassigned] = color
+            result = backtrack(assignment, colors, neighbors)
+            if result:
+                return result
+            del assignment[unassigned]
+    return None
+
+# Define the map (neighbors)
+neighbors = {
+    'A': ['B', 'C'],
+    'B': ['A', 'C', 'D'],
+    'C': ['A', 'B', 'D'],
+    'D': ['B', 'C']
+}
+
+colors = ['Red', 'Green', 'Blue']
+solution = backtrack({}, colors, neighbors)
+
+print("Solution:", solution)

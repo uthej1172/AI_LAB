@@ -1,0 +1,52 @@
+from collections import deque
+
+def is_solvable(x, y, z):
+    from math import gcd
+    return z <= max(x, y) and z % gcd(x, y) == 0
+
+def water_jug_bfs(x, y, z):
+    visited = set()
+    q = deque()
+
+    q.append((0, 0))  # Initial state: both jugs are empty
+
+    while q:
+        a, b = q.popleft()
+
+        if (a, b) in visited:
+            continue
+
+        visited.add((a, b))
+        print(f"Jug1: {a}L, Jug2: {b}L")
+        if a == z or b == z:
+            print("\nFound a solution!")
+            return True
+        next_states = set()
+        next_states.add((x, b))
+        
+        next_states.add((a, y))
+       
+        next_states.add((0, b))
+       
+        next_states.add((a, 0))
+        
+        pour = min(a, y - b)
+        next_states.add((a - pour, b + pour))
+   
+        pour = min(b, x - a)
+        next_states.add((a + pour, b - pour))
+
+        for state in next_states:
+            if state not in visited:
+                q.append(state)
+
+    print("\nNo solution.")
+    return False
+x = 4 
+y = 3  
+z = 2 
+
+if is_solvable(x, y, z):
+    water_jug_bfs(x, y, z)
+else:
+    print("The problem has no solution.")

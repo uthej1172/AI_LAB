@@ -1,0 +1,26 @@
+def vacuum_cleaner(location, status_A, status_B):
+    print(f"Initial Location: {location}")
+    print(f"Room A is {'Dirty' if status_A == 1 else 'Clean'}")
+    print(f"Room B is {'Dirty' if status_B == 1 else 'Clean'}")
+
+    if location == 'A':
+        if status_A == 1:
+            print("Action: Suck in A")
+            status_A = 0
+        print("Action: Move to B")
+        if status_B == 1:
+            print("Action: Suck in B")
+            status_B = 0
+    elif location == 'B':
+        if status_B == 1:
+            print("Action: Suck in B")
+            status_B = 0
+        print("Action: Move to A")
+        if status_A == 1:
+            print("Action: Suck in A")
+            status_A = 0
+
+    print(f"Final Status => A: {'Clean' if status_A == 0 else 'Dirty'}, B: {'Clean' if status_B == 0 else 'Dirty'}")
+
+# Example run
+vacuum_cleaner(location='A', status_A=1, status_B=1)
